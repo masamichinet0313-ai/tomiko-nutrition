@@ -1,11 +1,10 @@
 /**
  * FAQSection — よくある質問
- * Design: アコーディオン形式
+ * Design: ポップなアコーディオン、カラフルなQ/Aバッジ
  */
 
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 const faqs = [
@@ -31,7 +30,7 @@ const faqs = [
   },
   {
     q: "管理栄養士として働きたいのですが、登録できますか？",
-    a: "はい、管理栄養士の資格をお持ちの方の登録を受け付けています。資格をお持ちでも現場を離れている方も歓迎です。詳しくはお問い合わせフォームよりご連絡ください。",
+    a: "はい、管理栄養士の資格をお持ちの方の登録を受け付けています。資格をお持ちでも現場を離れている方も大歓迎です！詳しくはお問い合わせフォームよりご連絡ください。",
   },
 ];
 
@@ -40,18 +39,23 @@ function FAQItem({ q, a, index, isInView }: { q: string; a: string; index: numbe
 
   return (
     <motion.div
-      className="border-b border-[oklch(0.88_0.02_80)] last:border-0"
+      className="rounded-2xl overflow-hidden border border-[oklch(0.92_0.02_90)] bg-white hover:border-[oklch(0.65_0.20_20)]/40 transition-colors"
       initial={{ opacity: 0, y: 15 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      transition={{ duration: 0.5, delay: index * 0.07 }}
     >
       <button
-        className="w-full flex items-start justify-between gap-4 py-5 text-left group"
+        className="w-full flex items-start justify-between gap-4 p-5 text-left"
         onClick={() => setOpen(!open)}
       >
         <div className="flex items-start gap-3">
-          <span className="font-playfair text-sm font-bold text-[oklch(0.65_0.14_50)] mt-0.5 flex-shrink-0">Q.</span>
-          <span className="font-serif-jp text-base font-medium text-[oklch(0.22_0.01_60)] group-hover:text-[oklch(0.42_0.10_145)] transition-colors">
+          <span
+            className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white mt-0.5"
+            style={{ backgroundColor: "oklch(0.65 0.20 20)", fontFamily: "'Nunito', sans-serif" }}
+          >
+            Q
+          </span>
+          <span className="text-sm font-bold text-[oklch(0.25_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
             {q}
           </span>
         </div>
@@ -60,7 +64,7 @@ function FAQItem({ q, a, index, isInView }: { q: string; a: string; index: numbe
           transition={{ duration: 0.3 }}
           className="flex-shrink-0 mt-0.5"
         >
-          <ChevronDown className="w-5 h-5 text-[oklch(0.52_0.01_60)]" />
+          <ChevronDown className="w-5 h-5 text-[oklch(0.65_0.20_20)]" />
         </motion.div>
       </button>
 
@@ -70,9 +74,16 @@ function FAQItem({ q, a, index, isInView }: { q: string; a: string; index: numbe
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <div className="flex gap-3 pb-5">
-          <span className="font-playfair text-sm font-bold text-[oklch(0.42_0.10_145)] mt-0.5 flex-shrink-0">A.</span>
-          <p className="font-sans-jp text-sm text-[oklch(0.45_0.01_60)] leading-relaxed font-light">{a}</p>
+        <div className="flex gap-3 px-5 pb-5">
+          <span
+            className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white mt-0.5"
+            style={{ backgroundColor: "oklch(0.55 0.18 160)", fontFamily: "'Nunito', sans-serif" }}
+          >
+            A
+          </span>
+          <p className="text-sm text-[oklch(0.45_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            {a}
+          </p>
         </div>
       </motion.div>
     </motion.div>
@@ -84,45 +95,51 @@ export default function FAQSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="faq" className="py-24 lg:py-32 bg-[oklch(0.97_0.015_80)]" ref={ref}>
+    <section id="faq" className="py-20 lg:py-28 bg-[oklch(0.99_0.008_90)]" ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-5 gap-16">
-          {/* Left: Header */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-8 bg-[oklch(0.65_0.14_50)] rounded-full" />
-              <span className="font-sans-jp text-sm font-medium text-[oklch(0.52_0.01_60)] tracking-widest uppercase">
-                FAQ
-              </span>
-            </div>
-            <h2 className="font-serif-jp text-3xl lg:text-4xl font-bold text-[oklch(0.22_0.01_60)] mb-6 leading-tight">
-              よくある
-              <br />
-              ご質問
-            </h2>
-            <p className="font-sans-jp text-sm text-[oklch(0.52_0.01_60)] leading-relaxed font-light mb-8">
-              ご不明な点がございましたら、お気軽にお問い合わせください。
-            </p>
-            <button
-              onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-6 py-3 border-2 border-[oklch(0.42_0.10_145)] text-[oklch(0.42_0.10_145)] font-sans-jp text-sm font-medium rounded-full hover:bg-[oklch(0.42_0.10_145)] hover:text-white transition-all"
-            >
-              その他のご質問はこちら
-            </button>
-          </motion.div>
-
-          {/* Right: FAQ Items */}
-          <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm">
-            {faqs.map((faq, i) => (
-              <FAQItem key={faq.q} q={faq.q} a={faq.a} index={i} isInView={isInView} />
-            ))}
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[oklch(0.65_0.18_50)]/10 mb-4">
+            <span className="text-sm font-bold text-[oklch(0.55_0.15_50)]" style={{ fontFamily: "'Nunito', sans-serif" }}>FAQ</span>
           </div>
+          <h2 className="text-3xl lg:text-4xl font-black text-[oklch(0.22_0.01_60)] mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            よくある質問
+          </h2>
+          <p className="text-base text-[oklch(0.50_0.01_60)] max-w-xl mx-auto" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            気になることがあればお気軽にお問い合わせください！
+          </p>
+        </motion.div>
+
+        {/* FAQ Items */}
+        <div className="max-w-3xl mx-auto space-y-3">
+          {faqs.map((faq, i) => (
+            <FAQItem key={faq.q} q={faq.q} a={faq.a} index={i} isInView={isInView} />
+          ))}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          className="mt-10 text-center"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.6 }}
+        >
+          <p className="text-sm text-[oklch(0.55_0.01_60)] mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            その他のご質問もお気軽にどうぞ 💬
+          </p>
+          <button
+            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-7 py-3 border-2 border-[oklch(0.65_0.20_20)] text-[oklch(0.65_0.20_20)] font-bold text-sm rounded-2xl hover:bg-[oklch(0.65_0.20_20)] hover:text-white transition-all"
+            style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+          >
+            お問い合わせはこちら →
+          </button>
+        </motion.div>
       </div>
     </section>
   );

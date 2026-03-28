@@ -1,7 +1,7 @@
 /**
  * Home Page — 富子の訪問栄養指導
- * Design: 和モダン・ウォームミニマリズム
- * 
+ * Design: フレッシュ＆ポップ — コーラルピンク×ミントグリーン×サニーイエロー
+ *
  * Sections:
  * 1. Hero — 大きなビジュアルと訴求コピー
  * 2. About — 富子さんの想いとプロフィール
@@ -25,7 +25,7 @@ import FooterSection from "@/components/sections/FooterSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[oklch(0.97_0.015_80)]">
+    <div className="min-h-screen bg-[oklch(0.99_0.008_90)]">
       <Navigation />
       <HeroSection />
       <AboutSection />

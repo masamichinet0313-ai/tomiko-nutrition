@@ -1,13 +1,19 @@
 /**
  * ContactSection — お問い合わせ
- * Design: 2カラム（左:情報 右:フォーム）
+ * Design: ポップなフォーム、コーラルピンクのアクセント
  */
 
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { Send, User, Mail, MessageSquare, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+
+const contactTypes = [
+  { value: "service", label: "サービスについて" },
+  { value: "insurance", label: "保険適用について" },
+  { value: "dietitian", label: "管理栄養士として登録したい" },
+  { value: "other", label: "その他" },
+];
 
 export default function ContactSection() {
   const ref = useRef(null);
@@ -15,218 +21,204 @@ export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: "",
-    phone: "",
     email: "",
-    type: "patient",
+    type: "service",
     message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast.success("お問い合わせを受け付けました。2営業日以内にご連絡いたします。");
+    if (!form.name || !form.email || !form.message) {
+      toast.error("必須項目を入力してください");
+      return;
+    }
     setSubmitted(true);
+    toast.success("お問い合わせを受け付けました！");
   };
 
   return (
-    <section id="contact" className="py-24 lg:py-32 bg-white" ref={ref}>
+    <section id="contact" className="py-20 lg:py-28 bg-white" ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
-            <span className="font-sans-jp text-sm font-medium text-[oklch(0.52_0.01_60)] tracking-widest uppercase">
-              Contact
-            </span>
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[oklch(0.65_0.20_20)]/10 mb-4">
+            <span className="text-sm font-bold text-[oklch(0.55_0.18_20)]" style={{ fontFamily: "'Nunito', sans-serif" }}>Contact</span>
           </div>
-          <h2 className="font-serif-jp text-3xl lg:text-4xl font-bold text-[oklch(0.22_0.01_60)] mb-4">
-            お問い合わせ・無料相談
+          <h2 className="text-3xl lg:text-4xl font-black text-[oklch(0.22_0.01_60)] mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            お気軽にご相談ください！
           </h2>
-          <p className="font-sans-jp text-base text-[oklch(0.52_0.01_60)] max-w-xl mx-auto leading-relaxed font-light">
-            サービスについてのご質問、無料相談のご予約など、お気軽にご連絡ください。
+          <p className="text-base text-[oklch(0.50_0.01_60)] max-w-xl mx-auto" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            サービスのご質問・保険適用の確認・管理栄養士としての登録など、なんでもどうぞ 🌿
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Left: Contact Info */}
+        <div className="grid lg:grid-cols-5 gap-10">
+          {/* Left: Info */}
           <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, x: -20 }}
+            className="lg:col-span-2 space-y-5"
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[oklch(0.94_0.04_145)] flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-[oklch(0.42_0.10_145)]" />
+            {[
+              {
+                emoji: "📞",
+                color: "oklch(0.65 0.20 20)",
+                bg: "oklch(0.97 0.04 20)",
+                title: "お電話でのご相談",
+                desc: "平日 9:00〜18:00\nXXX-XXXX-XXXX",
+              },
+              {
+                emoji: "📧",
+                color: "oklch(0.55 0.18 160)",
+                bg: "oklch(0.95 0.05 160)",
+                title: "メールでのご相談",
+                desc: "24時間受付\ninfo@tomiko-nutrition.jp",
+              },
+              {
+                emoji: "👩‍⚕️",
+                color: "oklch(0.60 0.18 270)",
+                bg: "oklch(0.95 0.04 270)",
+                title: "管理栄養士の方へ",
+                desc: "フリーランスとして活躍したい方も\nぜひご連絡ください！",
+              },
+            ].map(({ emoji, color, bg, title, desc }) => (
+              <div
+                key={title}
+                className="flex gap-4 p-5 rounded-2xl border border-[oklch(0.92_0.02_90)]"
+                style={{ backgroundColor: bg }}
+              >
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
+                  style={{ backgroundColor: `${color}20` }}
+                >
+                  {emoji}
                 </div>
                 <div>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mb-1 uppercase tracking-wide">お電話</p>
-                  <p className="font-serif-jp text-xl font-semibold text-[oklch(0.22_0.01_60)]">000-0000-0000</p>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mt-1">平日 9:00〜17:00</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[oklch(0.94_0.04_145)] flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-[oklch(0.42_0.10_145)]" />
-                </div>
-                <div>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mb-1 uppercase tracking-wide">メール</p>
-                  <p className="font-serif-jp text-base font-medium text-[oklch(0.22_0.01_60)]">info@tomiko-nutrition.jp</p>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mt-1">24時間受付・2営業日以内に返信</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[oklch(0.94_0.04_145)] flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-[oklch(0.42_0.10_145)]" />
-                </div>
-                <div>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mb-1 uppercase tracking-wide">対応エリア</p>
-                  <p className="font-sans-jp text-sm text-[oklch(0.40_0.01_60)] leading-relaxed font-light">
-                    詳しくはお問い合わせください。
-                    <br />
-                    地域の管理栄養士と連携して対応します。
+                  <h4 className="font-bold text-[oklch(0.25_0.01_60)] mb-1 text-sm" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    {title}
+                  </h4>
+                  <p className="text-xs text-[oklch(0.50_0.01_60)] leading-relaxed whitespace-pre-line" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    {desc}
                   </p>
                 </div>
               </div>
-            </div>
-
-            {/* For Dietitians */}
-            <div className="mt-10 p-5 bg-[oklch(0.95_0.05_50)] rounded-2xl border border-[oklch(0.88_0.06_50)]">
-              <h3 className="font-serif-jp text-base font-semibold text-[oklch(0.40_0.08_50)] mb-2">
-                管理栄養士の方へ
-              </h3>
-              <p className="font-sans-jp text-sm text-[oklch(0.45_0.08_50)] leading-relaxed font-light">
-                資格をお持ちで在宅訪問に関心のある管理栄養士の方も、ぜひお問い合わせください。フリーランスとして活躍できる機会をご紹介します。
-              </p>
-            </div>
+            ))}
           </motion.div>
 
           {/* Right: Form */}
           <motion.div
             className="lg:col-span-3"
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {submitted ? (
-              <div className="h-full flex flex-col items-center justify-center py-16 text-center">
-                <div className="w-16 h-16 rounded-full bg-[oklch(0.94_0.04_145)] flex items-center justify-center mb-4">
-                  <CheckCircle className="w-8 h-8 text-[oklch(0.42_0.10_145)]" />
+              <div className="h-full flex flex-col items-center justify-center text-center py-16 rounded-3xl bg-[oklch(0.97_0.04_20)]">
+                <div className="w-16 h-16 rounded-full bg-[oklch(0.65_0.20_20)] flex items-center justify-center mb-4 shadow-lg">
+                  <CheckCircle2 className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-serif-jp text-xl font-semibold text-[oklch(0.22_0.01_60)] mb-2">
-                  送信完了しました
+                <h3 className="text-xl font-black text-[oklch(0.22_0.01_60)] mb-2" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                  送信完了！ありがとうございます 🎉
                 </h3>
-                <p className="font-sans-jp text-sm text-[oklch(0.52_0.01_60)] font-light">
+                <p className="text-sm text-[oklch(0.50_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
                   2営業日以内にご連絡いたします。
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Inquiry Type */}
-                <div>
-                  <label className="font-sans-jp text-sm font-medium text-[oklch(0.35_0.01_60)] block mb-2">
-                    お問い合わせ種別
-                  </label>
-                  <div className="flex gap-3 flex-wrap">
-                    {[
-                      { value: "patient", label: "サービス利用（患者・家族）" },
-                      { value: "dietitian", label: "管理栄養士として登録" },
-                      { value: "other", label: "その他" },
-                    ].map((opt) => (
-                      <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="type"
-                          value={opt.value}
-                          checked={form.type === opt.value}
-                          onChange={(e) => setForm({ ...form, type: e.target.value })}
-                          className="accent-[oklch(0.42_0.10_145)]"
-                        />
-                        <span className="font-sans-jp text-sm text-[oklch(0.40_0.01_60)]">{opt.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name */}
                 <div>
-                  <label className="font-sans-jp text-sm font-medium text-[oklch(0.35_0.01_60)] block mb-2">
-                    お名前 <span className="text-[oklch(0.65_0.14_50)]">*</span>
+                  <label className="block text-sm font-bold text-[oklch(0.35_0.01_60)] mb-1.5" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    お名前 <span className="text-[oklch(0.65_0.20_20)]">*</span>
                   </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="山田 太郎"
-                    className="w-full px-4 py-3 rounded-xl border border-[oklch(0.88_0.02_80)] bg-[oklch(0.97_0.015_80)] font-sans-jp text-sm text-[oklch(0.22_0.01_60)] placeholder:text-[oklch(0.70_0.01_60)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.42_0.10_145)]/40 focus:border-[oklch(0.42_0.10_145)] transition-all"
-                  />
-                </div>
-
-                {/* Phone + Email */}
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-sans-jp text-sm font-medium text-[oklch(0.35_0.01_60)] block mb-2">
-                      電話番号
-                    </label>
+                  <div className="relative">
+                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[oklch(0.65_0.01_60)]" />
                     <input
-                      type="tel"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      placeholder="000-0000-0000"
-                      className="w-full px-4 py-3 rounded-xl border border-[oklch(0.88_0.02_80)] bg-[oklch(0.97_0.015_80)] font-sans-jp text-sm text-[oklch(0.22_0.01_60)] placeholder:text-[oklch(0.70_0.01_60)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.42_0.10_145)]/40 focus:border-[oklch(0.42_0.10_145)] transition-all"
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder="山田 太郎"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[oklch(0.92_0.02_90)] focus:border-[oklch(0.65_0.20_20)] focus:outline-none text-sm transition-colors bg-[oklch(0.99_0.005_90)]"
+                      style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
                     />
                   </div>
-                  <div>
-                    <label className="font-sans-jp text-sm font-medium text-[oklch(0.35_0.01_60)] block mb-2">
-                      メールアドレス <span className="text-[oklch(0.65_0.14_50)]">*</span>
-                    </label>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-bold text-[oklch(0.35_0.01_60)] mb-1.5" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    メールアドレス <span className="text-[oklch(0.65_0.20_20)]">*</span>
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[oklch(0.65_0.01_60)]" />
                     <input
                       type="email"
-                      required
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      placeholder="example@email.com"
-                      className="w-full px-4 py-3 rounded-xl border border-[oklch(0.88_0.02_80)] bg-[oklch(0.97_0.015_80)] font-sans-jp text-sm text-[oklch(0.22_0.01_60)] placeholder:text-[oklch(0.70_0.01_60)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.42_0.10_145)]/40 focus:border-[oklch(0.42_0.10_145)] transition-all"
+                      placeholder="taro@example.com"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[oklch(0.92_0.02_90)] focus:border-[oklch(0.65_0.20_20)] focus:outline-none text-sm transition-colors bg-[oklch(0.99_0.005_90)]"
+                      style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
                     />
+                  </div>
+                </div>
+
+                {/* Type */}
+                <div>
+                  <label className="block text-sm font-bold text-[oklch(0.35_0.01_60)] mb-1.5" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    お問い合わせの種類
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {contactTypes.map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setForm({ ...form, type: value })}
+                        className="px-4 py-2 rounded-full text-xs font-bold border-2 transition-all"
+                        style={{
+                          fontFamily: "'Noto Sans JP', sans-serif",
+                          borderColor: form.type === value ? "oklch(0.65 0.20 20)" : "oklch(0.92 0.02 90)",
+                          backgroundColor: form.type === value ? "oklch(0.65 0.20 20)" : "white",
+                          color: form.type === value ? "white" : "oklch(0.45 0.01 60)",
+                        }}
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label className="font-sans-jp text-sm font-medium text-[oklch(0.35_0.01_60)] block mb-2">
-                    ご相談内容 <span className="text-[oklch(0.65_0.14_50)]">*</span>
+                  <label className="block text-sm font-bold text-[oklch(0.35_0.01_60)] mb-1.5" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    メッセージ <span className="text-[oklch(0.65_0.20_20)]">*</span>
                   </label>
-                  <textarea
-                    required
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="ご相談内容をご記入ください。（例：母が糖尿病で在宅療養中です。訪問栄養指導を受けたいのですが…）"
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-xl border border-[oklch(0.88_0.02_80)] bg-[oklch(0.97_0.015_80)] font-sans-jp text-sm text-[oklch(0.22_0.01_60)] placeholder:text-[oklch(0.70_0.01_60)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.42_0.10_145)]/40 focus:border-[oklch(0.42_0.10_145)] transition-all resize-none"
-                  />
+                  <div className="relative">
+                    <MessageSquare className="absolute left-3.5 top-3.5 w-4 h-4 text-[oklch(0.65_0.01_60)]" />
+                    <textarea
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      placeholder="ご質問・ご相談内容をご記入ください"
+                      rows={5}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[oklch(0.92_0.02_90)] focus:border-[oklch(0.65_0.20_20)] focus:outline-none text-sm transition-colors resize-none bg-[oklch(0.99_0.005_90)]"
+                      style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+                    />
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-4 bg-[oklch(0.42_0.10_145)] text-white font-sans-jp font-medium text-base rounded-xl hover:bg-[oklch(0.30_0.10_145)] transition-all hover:shadow-lg active:scale-[0.98]"
+                  className="w-full py-4 bg-[oklch(0.65_0.20_20)] text-white font-bold text-base rounded-2xl shadow-lg shadow-[oklch(0.65_0.20_20)]/25 hover:bg-[oklch(0.58_0.20_20)] hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2"
+                  style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
                 >
                   <Send className="w-4 h-4" />
                   送信する
                 </button>
-
-                <p className="font-sans-jp text-xs text-[oklch(0.60_0.01_60)] text-center font-light">
-                  送信いただいた情報は、お問い合わせへの返答のみに使用します。
-                </p>
               </form>
             )}
           </motion.div>

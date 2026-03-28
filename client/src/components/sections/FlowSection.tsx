@@ -1,48 +1,52 @@
 /**
  * FlowSection — ご利用の流れ
- * Design: 縦型ステップフロー + 番号アクセント
+ * Design: ポップなステップカード、カラフルな番号バッジ
  */
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Phone, FileText, UserCheck, MapPin, RefreshCw } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { Phone, FileText, CalendarCheck, Home, RefreshCw } from "lucide-react";
 
 const steps = [
   {
-    num: "01",
-    icon: <Phone className="w-5 h-5" />,
-    title: "お問い合わせ・無料相談",
-    desc: "まずはお電話またはメールでお気軽にご相談ください。サービス内容や保険適用の可否についてご説明します。",
-    note: "※ 相談は無料です",
+    icon: Phone,
+    color: "oklch(0.65 0.20 20)",
+    bg: "oklch(0.97 0.04 20)",
+    title: "まずはご相談",
+    desc: "電話・メール・フォームからお気軽にご連絡ください。サービス内容や保険適用についてご説明します。",
+    note: "無料・相談のみもOK！",
   },
   {
-    num: "02",
-    icon: <FileText className="w-5 h-5" />,
-    title: "医師の指示書取得",
-    desc: "保険適用で訪問栄養指導を受けるには、かかりつけ医から「訪問栄養食事指導の指示書」を取得していただく必要があります。手続きのサポートもいたします。",
-    note: "※ 医療保険・介護保険で手続きが異なります",
+    icon: FileText,
+    color: "oklch(0.55 0.18 160)",
+    bg: "oklch(0.95 0.05 160)",
+    title: "主治医に相談",
+    desc: "かかりつけ医に「訪問栄養食事指導を受けたい」とお伝えください。医師から指示書を発行してもらいます。",
+    note: "手続きのサポートもします",
   },
   {
-    num: "03",
-    icon: <UserCheck className="w-5 h-5" />,
-    title: "担当管理栄養士のご紹介",
-    desc: "地域・状態・ご希望に合わせて、最適な管理栄養士をご紹介します。事前にプロフィールや専門分野をご確認いただけます。",
-    note: "",
+    icon: CalendarCheck,
+    color: "oklch(0.60 0.18 270)",
+    bg: "oklch(0.95 0.04 270)",
+    title: "日程の調整",
+    desc: "担当の管理栄養士が決まったら、ご都合に合わせて初回訪問の日程を調整します。",
+    note: "担当者プロフィールも確認可",
   },
   {
-    num: "04",
-    icon: <MapPin className="w-5 h-5" />,
-    title: "初回訪問・アセスメント",
-    desc: "担当管理栄養士がご自宅に伺い、現在の食事内容・栄養状態・生活環境を詳しく確認します。ご家族の方も同席いただけます。",
-    note: "※ 初回は60分程度",
+    icon: Home,
+    color: "oklch(0.65 0.18 50)",
+    bg: "oklch(0.96 0.05 50)",
+    title: "初回訪問",
+    desc: "管理栄養士がご自宅に伺い、食事内容・栄養状態・生活環境を詳しく確認。個別プランを作成します。",
+    note: "ご家族の同席もOK",
   },
   {
-    num: "05",
-    icon: <RefreshCw className="w-5 h-5" />,
-    title: "継続訪問・フォローアップ",
-    desc: "月2回を基本に定期訪問を行い、食事プランの実施状況を確認しながら継続的にサポートします。状態の変化に応じてプランを柔軟に見直します。",
-    note: "",
+    icon: RefreshCw,
+    color: "oklch(0.55 0.16 320)",
+    bg: "oklch(0.96 0.04 320)",
+    title: "継続サポート",
+    desc: "月1〜2回の定期訪問でプランの見直しや進捗確認を行い、長期的な改善をサポートします。",
+    note: "月2回まで保険適用",
   },
 ];
 
@@ -51,81 +55,93 @@ export default function FlowSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="flow" className="py-24 lg:py-32 bg-[oklch(0.97_0.015_80)]" ref={ref}>
+    <section id="flow" className="py-20 lg:py-28 bg-white" ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
-            <span className="font-sans-jp text-sm font-medium text-[oklch(0.52_0.01_60)] tracking-widest uppercase">
-              Flow
-            </span>
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[oklch(0.55_0.18_160)]/10 mb-4">
+            <span className="text-sm font-bold text-[oklch(0.40_0.15_160)]" style={{ fontFamily: "'Nunito', sans-serif" }}>How it works</span>
           </div>
-          <h2 className="font-serif-jp text-3xl lg:text-4xl font-bold text-[oklch(0.22_0.01_60)] mb-4">
+          <h2 className="text-3xl lg:text-4xl font-black text-[oklch(0.22_0.01_60)] mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
             ご利用の流れ
           </h2>
-          <p className="font-sans-jp text-base text-[oklch(0.52_0.01_60)] max-w-xl mx-auto leading-relaxed font-light">
-            お問い合わせから訪問開始まで、スムーズにご利用いただけるようサポートします。
+          <p className="text-base text-[oklch(0.50_0.01_60)] max-w-xl mx-auto" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            初めての方も安心！シンプルな5ステップでサービスを開始できます。
           </p>
         </motion.div>
 
         {/* Steps */}
-        <div className="max-w-3xl mx-auto">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.num}
-              className="flex gap-6 mb-8 last:mb-0"
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-            >
-              {/* Left: Number + Line */}
-              <div className="flex flex-col items-center flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-[oklch(0.42_0.10_145)] text-white flex items-center justify-center flex-shrink-0 shadow-md">
-                  {step.icon}
-                </div>
-                {i < steps.length - 1 && (
-                  <div className="w-px flex-1 bg-gradient-to-b from-[oklch(0.42_0.10_145)]/40 to-transparent mt-2 min-h-8" />
-                )}
-              </div>
+        <div className="relative">
+          {/* Connecting line (desktop) */}
+          <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-[oklch(0.65_0.20_20)] via-[oklch(0.55_0.18_160)] to-[oklch(0.55_0.16_320)]" />
 
-              {/* Right: Content */}
-              <div className="pb-8">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="font-playfair text-sm font-bold text-[oklch(0.65_0.14_50)]">{step.num}</span>
-                  <h3 className="font-serif-jp text-lg font-semibold text-[oklch(0.22_0.01_60)]">{step.title}</h3>
-                </div>
-                <p className="font-sans-jp text-sm text-[oklch(0.45_0.01_60)] leading-relaxed font-light mb-2">
-                  {step.desc}
-                </p>
-                {step.note && (
-                  <span className="inline-block font-sans-jp text-xs text-[oklch(0.65_0.14_50)] bg-[oklch(0.95_0.05_50)] px-3 py-1 rounded-full">
-                    {step.note}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {steps.map(({ icon: Icon, color, bg, title, desc, note }, i) => (
+              <motion.div
+                key={title}
+                className="relative flex flex-col items-center text-center"
+                initial={{ opacity: 0, y: 25 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                {/* Icon circle */}
+                <div
+                  className="relative z-10 w-14 h-14 rounded-full flex items-center justify-center mb-4 shadow-lg"
+                  style={{ backgroundColor: color }}
+                >
+                  <Icon className="w-6 h-6 text-white" />
+                  <span
+                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-white border-2 flex items-center justify-center text-xs font-black shadow-sm"
+                    style={{ borderColor: color, color, fontFamily: "'Nunito', sans-serif" }}
+                  >
+                    {i + 1}
                   </span>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                </div>
+
+                {/* Card */}
+                <div
+                  className="w-full rounded-2xl p-5 border border-[oklch(0.92_0.02_90)] hover:shadow-lg transition-all"
+                  style={{ backgroundColor: bg }}
+                >
+                  <h3 className="text-sm font-black text-[oklch(0.22_0.01_60)] mb-2" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    {title}
+                  </h3>
+                  <p className="text-xs text-[oklch(0.50_0.01_60)] leading-relaxed mb-3" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                    {desc}
+                  </p>
+                  <span
+                    className="inline-block px-2.5 py-1 rounded-full text-[10px] font-bold text-white"
+                    style={{ backgroundColor: color }}
+                  >
+                    {note}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
-        {/* CTA */}
+        {/* Bottom CTA */}
         <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="mt-14 text-center"
+          initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
+          <p className="text-base text-[oklch(0.45_0.01_60)] mb-5" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            まずは気軽にご相談ください。保険適用の確認もお手伝いします 😊
+          </p>
           <button
             onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-10 py-4 bg-[oklch(0.42_0.10_145)] text-white font-sans-jp font-medium text-base rounded-full hover:bg-[oklch(0.30_0.10_145)] transition-all hover:shadow-lg active:scale-95"
+            className="px-8 py-4 bg-[oklch(0.65_0.20_20)] text-white font-bold text-base rounded-2xl shadow-lg shadow-[oklch(0.65_0.20_20)]/25 hover:bg-[oklch(0.58_0.20_20)] hover:shadow-xl transition-all active:scale-95"
+            style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
           >
-            まずは無料相談から
+            無料相談してみる 🌿
           </button>
         </motion.div>
       </div>

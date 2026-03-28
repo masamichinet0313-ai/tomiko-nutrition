@@ -1,58 +1,64 @@
 /**
  * ServiceSection — サービス内容
- * Design: カードグリッド + 食事プランニング画像
+ * Design: カラフルなカード、ポップなアイコン、明るい背景
  */
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Heart, Utensils, Users, ClipboardList, Home, Stethoscope } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { ClipboardList, Utensils, HeartPulse, MessageCircle, Users, BookOpen } from "lucide-react";
 
-const MEAL_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663083030511/6EnhzEJu9tLg7i3oihn6bR/meal-planning-DSqhdjeGmaHbUuVwaFg7co.webp";
+const MEAL_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663083030511/6EnhzEJu9tLg7i3oihn6bR/healthy-meal-colorful-TqdgoyvaDQGDQ2MHCo3pHn.webp";
 
 const services = [
   {
-    icon: <ClipboardList className="w-6 h-6" />,
+    icon: ClipboardList,
+    color: "oklch(0.65 0.20 20)",
+    bg: "oklch(0.97 0.04 20)",
     title: "栄養アセスメント",
-    desc: "現在の食事内容・栄養状態を詳しく評価し、課題を明確にします。",
-    color: "oklch(0.42 0.10 145)",
-    bg: "oklch(0.94 0.04 145)",
+    desc: "食事内容・栄養状態・体重・血液データなどを総合的に評価し、現状を把握します。",
   },
   {
-    icon: <Utensils className="w-6 h-6" />,
+    icon: Utensils,
+    color: "oklch(0.55 0.18 160)",
+    bg: "oklch(0.95 0.05 160)",
     title: "個別食事プラン作成",
-    desc: "病態・嗜好・生活環境に合わせたオーダーメイドの食事計画を立案します。",
-    color: "oklch(0.65 0.14 50)",
-    bg: "oklch(0.95 0.05 50)",
+    desc: "疾患・生活スタイル・好みに合わせたオーダーメイドの食事プランをご提案します。",
   },
   {
-    icon: <Stethoscope className="w-6 h-6" />,
-    title: "疾患別栄養指導",
-    desc: "糖尿病・腎臓病・脂質異常症・低栄養・嚥下障害など幅広く対応します。",
-    color: "oklch(0.42 0.10 145)",
-    bg: "oklch(0.94 0.04 145)",
+    icon: HeartPulse,
+    color: "oklch(0.60 0.18 270)",
+    bg: "oklch(0.95 0.04 270)",
+    title: "疾患別食事指導",
+    desc: "糖尿病・腎臓病・脂質異常症・低栄養・嚥下障害など、専門的な食事療法をサポートします。",
   },
   {
-    icon: <Home className="w-6 h-6" />,
-    title: "在宅環境に合わせた指導",
-    desc: "台所設備・家族構成・介護状況を踏まえた、実践的なアドバイスを行います。",
-    color: "oklch(0.65 0.14 50)",
-    bg: "oklch(0.95 0.05 50)",
+    icon: MessageCircle,
+    color: "oklch(0.65 0.18 50)",
+    bg: "oklch(0.96 0.05 50)",
+    title: "調理アドバイス",
+    desc: "実際のキッチンで一緒に考える、すぐに実践できる調理のコツや食材選びのアドバイス。",
   },
   {
-    icon: <Users className="w-6 h-6" />,
-    title: "ご家族・介護者への指導",
-    desc: "食事を準備するご家族や介護者の方にも、わかりやすく指導します。",
-    color: "oklch(0.42 0.10 145)",
-    bg: "oklch(0.94 0.04 145)",
+    icon: Users,
+    color: "oklch(0.55 0.16 320)",
+    bg: "oklch(0.96 0.04 320)",
+    title: "ご家族へのサポート",
+    desc: "介護するご家族への食事準備のアドバイスや、栄養に関する疑問にもお答えします。",
   },
   {
-    icon: <Heart className="w-6 h-6" />,
-    title: "継続的なフォローアップ",
-    desc: "定期的な訪問で状態の変化を把握し、プランを随時見直します。",
-    color: "oklch(0.65 0.14 50)",
-    bg: "oklch(0.95 0.05 50)",
+    icon: BookOpen,
+    color: "oklch(0.55 0.14 90)",
+    bg: "oklch(0.96 0.05 90)",
+    title: "継続フォローアップ",
+    desc: "定期的な訪問で食事プランの見直しや進捗確認を行い、長期的な改善をサポートします。",
   },
+];
+
+const stats = [
+  { value: "月2回", label: "訪問回数（上限）" },
+  { value: "30〜60分", label: "1回の訪問時間" },
+  { value: "保険適用", label: "介護・医療保険" },
+  { value: "全国対応", label: "フリーランス連携" },
 ];
 
 export default function ServiceSection() {
@@ -60,93 +66,91 @@ export default function ServiceSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="service" className="py-24 lg:py-32 bg-white" ref={ref}>
+    <section id="service" className="py-20 lg:py-28 bg-[oklch(0.99_0.008_90)]" ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
-            <span className="font-sans-jp text-sm font-medium text-[oklch(0.52_0.01_60)] tracking-widest uppercase">
-              Service
-            </span>
-            <div className="w-12 h-px bg-[oklch(0.88_0.02_80)]" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[oklch(0.65_0.20_20)]/10 mb-4">
+            <span className="text-sm font-bold text-[oklch(0.55_0.18_20)]" style={{ fontFamily: "'Nunito', sans-serif" }}>Services</span>
           </div>
-          <h2 className="font-serif-jp text-3xl lg:text-4xl font-bold text-[oklch(0.22_0.01_60)] mb-4">
-            サービス内容
+          <h2 className="text-3xl lg:text-4xl font-black text-[oklch(0.22_0.01_60)] mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            こんなことができます！
           </h2>
-          <p className="font-sans-jp text-base text-[oklch(0.52_0.01_60)] max-w-xl mx-auto leading-relaxed font-light">
-            管理栄養士が自宅に訪問し、療養中の方の食事・栄養に関するあらゆる課題に対応します。
+          <p className="text-base text-[oklch(0.50_0.01_60)] max-w-xl mx-auto" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+            管理栄養士があなたのご自宅に伺い、一人ひとりに合ったサポートを提供します。
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-10 items-start">
-          {/* Service Cards */}
-          <div className="lg:col-span-3 grid sm:grid-cols-2 gap-4">
-            {services.map((service, i) => (
-              <motion.div
-                key={service.title}
-                className="bg-[oklch(0.97_0.015_80)] rounded-2xl p-5 hover:shadow-md transition-all group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+        {/* Stats bar */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {stats.map(({ value, label }) => (
+            <div
+              key={label}
+              className="text-center py-5 px-4 rounded-2xl bg-white border-2 border-[oklch(0.92_0.02_90)] hover:border-[oklch(0.65_0.20_20)]/40 hover:shadow-md transition-all"
+            >
+              <p className="text-2xl font-black text-[oklch(0.65_0.20_20)] mb-1" style={{ fontFamily: "'Nunito', sans-serif" }}>{value}</p>
+              <p className="text-xs font-medium text-[oklch(0.55_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>{label}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Service Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+          {services.map(({ icon: Icon, color, bg, title, desc }, i) => (
+            <motion.div
+              key={title}
+              className="p-6 rounded-3xl bg-white border border-[oklch(0.92_0.02_90)] hover:shadow-xl hover:-translate-y-1 transition-all group"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+            >
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+                style={{ backgroundColor: bg }}
               >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: service.bg, color: service.color }}
-                >
-                  {service.icon}
-                </div>
-                <h3 className="font-serif-jp text-base font-semibold text-[oklch(0.22_0.01_60)] mb-2">
-                  {service.title}
-                </h3>
-                <p className="font-sans-jp text-sm text-[oklch(0.52_0.01_60)] leading-relaxed font-light">
-                  {service.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Image Side */}
-          <motion.div
-            className="lg:col-span-2"
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="relative">
-              <div className="absolute -bottom-4 -right-4 w-full h-full bg-[oklch(0.65_0.14_50)]/15 rounded-2xl" />
-              <img
-                src={MEAL_IMAGE}
-                alt="食事プランニング"
-                className="relative z-10 w-full rounded-2xl shadow-lg object-cover"
-                style={{ aspectRatio: "4/3" }}
-              />
-            </div>
-
-            {/* Info box */}
-            <div className="mt-8 bg-[oklch(0.42_0.10_145)] rounded-2xl p-6 text-white">
-              <h3 className="font-serif-jp text-lg font-semibold mb-3">指導の基本情報</h3>
-              <div className="space-y-2">
-                {[
-                  { label: "訪問頻度", value: "月2回まで（保険適用）" },
-                  { label: "指導時間", value: "30〜40分程度" },
-                  { label: "対応エリア", value: "ご相談ください" },
-                  { label: "担当者", value: "管理栄養士（資格保有者）" },
-                ].map((item) => (
-                  <div key={item.label} className="flex justify-between items-center py-2 border-b border-white/20 last:border-0">
-                    <span className="font-sans-jp text-sm text-white/70">{item.label}</span>
-                    <span className="font-sans-jp text-sm font-medium text-white">{item.value}</span>
-                  </div>
-                ))}
+                <Icon className="w-6 h-6" style={{ color }} />
               </div>
-            </div>
-          </motion.div>
+              <h3 className="text-base font-bold text-[oklch(0.25_0.01_60)] mb-2" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                {title}
+              </h3>
+              <p className="text-sm text-[oklch(0.50_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                {desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Bottom image banner */}
+        <motion.div
+          className="relative rounded-3xl overflow-hidden h-52 md:h-64"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <img src={MEAL_IMAGE} alt="バランスの良い食事" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.22_0.01_60)]/70 to-transparent flex items-center px-10">
+            <div>
+              <p className="text-white/80 text-sm font-bold mb-1" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                Personalized Nutrition
+              </p>
+              <h3 className="text-white text-2xl md:text-3xl font-black" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                あなただけの食事プランを
+                <br />
+                一緒に作りましょう 🍽️
+              </h3>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

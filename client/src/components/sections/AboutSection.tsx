@@ -1,100 +1,129 @@
 /**
- * AboutSection — 富子さんの想いとプロフィール
- * Design: 左右非対称レイアウト、写真と文章の対比
+ * AboutSection — 富子さん紹介
+ * Design: ポップ＆フレッシュ。カラフルなアクセント、丸みのあるカード
  */
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Heart, Star, Users, Sparkles } from "lucide-react";
 
-const TOMIKO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663083030511/6EnhzEJu9tLg7i3oihn6bR/about-tomiko-JZEjDMmtkPQ9ma48ZjzkgN.webp";
+const PROFILE_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663083030511/6EnhzEJu9tLg7i3oihn6bR/tomiko-profile-young-N5hE3RnNwLACwqHThWSWT9.webp";
+
+const highlights = [
+  { icon: Star, color: "oklch(0.85 0.14 90)", text: "管理栄養士", sub: "国家資格保有" },
+  { icon: Heart, color: "oklch(0.65 0.20 20)", text: "在宅専門", sub: "訪問指導に特化" },
+  { icon: Users, color: "oklch(0.72 0.14 160)", text: "チーム制", sub: "多職種と連携" },
+];
 
 export default function AboutSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="py-24 lg:py-32 bg-[oklch(0.97_0.015_80)]" ref={ref}>
+    <section id="about" className="py-20 lg:py-28 bg-white overflow-hidden" ref={ref}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Image Side */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <div className="relative">
-              {/* Decorative background shape */}
-              <div className="absolute -top-4 -left-4 w-full h-full bg-[oklch(0.72_0.08_145)]/20 rounded-2xl" />
+            {/* Decorative blobs behind image */}
+            <div className="absolute -top-6 -left-6 w-48 h-48 rounded-full bg-[oklch(0.65_0.20_20)]/15 blur-2xl" />
+            <div className="absolute -bottom-6 -right-6 w-40 h-40 rounded-full bg-[oklch(0.72_0.14_160)]/20 blur-2xl" />
+            <div className="absolute top-1/2 -right-4 w-24 h-24 rounded-full bg-[oklch(0.92_0.12_90)]/30 blur-xl" />
+
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[oklch(0.65_0.20_20)]/15">
               <img
-                src={TOMIKO_IMAGE}
-                alt="管理栄養士 山田富子"
-                className="relative z-10 w-full max-w-sm mx-auto lg:mx-0 rounded-2xl shadow-xl object-cover"
-                style={{ aspectRatio: "3/4" }}
+                src={PROFILE_IMAGE}
+                alt="山田富子 管理栄養士"
+                className="w-full h-auto object-cover"
               />
-              {/* Floating badge */}
-              <motion.div
-                className="absolute z-20 -bottom-6 -right-4 lg:right-4 bg-white rounded-2xl shadow-lg px-5 py-4 max-w-xs"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[oklch(0.42_0.10_145)]/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xl">🌿</span>
-                  </div>
+              {/* Name card overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent p-6">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="font-serif-jp text-sm font-semibold text-[oklch(0.22_0.01_60)]">管理栄養士</p>
-                    <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)]">山田 富子</p>
+                    <p className="text-xs font-bold text-[oklch(0.65_0.20_20)] tracking-widest uppercase mb-1" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                      Registered Dietitian
+                    </p>
+                    <h3 className="text-2xl font-black text-[oklch(0.22_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                      山田 富子
+                    </h3>
+                    <p className="text-sm font-medium text-[oklch(0.50_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                      管理栄養士 / 訪問栄養指導サービス代表
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-[oklch(0.65_0.20_20)] flex items-center justify-center shadow-lg">
+                    <Sparkles className="w-6 h-6 text-white" />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
+
+            {/* Floating stats */}
+            <motion.div
+              className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl shadow-[oklch(0.65_0.20_20)]/15 p-4 flex items-center gap-3"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <div className="w-10 h-10 rounded-xl bg-[oklch(0.92_0.12_90)] flex items-center justify-center">
+                <Star className="w-5 h-5 text-[oklch(0.55_0.18_80)]" />
+              </div>
+              <div>
+                <p className="text-lg font-black text-[oklch(0.22_0.01_60)]" style={{ fontFamily: "'Nunito', sans-serif" }}>管理栄養士</p>
+                <p className="text-xs text-[oklch(0.55_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>国家資格保有</p>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Text Side */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
           >
             {/* Section label */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-8 bg-[oklch(0.65_0.14_50)] rounded-full" />
-              <span className="font-sans-jp text-sm font-medium text-[oklch(0.52_0.01_60)] tracking-widest uppercase">
-                About
-              </span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[oklch(0.65_0.20_20)]/10 mb-6">
+              <span className="text-sm font-bold text-[oklch(0.55_0.18_20)]" style={{ fontFamily: "'Nunito', sans-serif" }}>About Tomiko</span>
             </div>
 
-            <h2 className="font-serif-jp text-3xl lg:text-4xl font-bold text-[oklch(0.22_0.01_60)] leading-tight mb-6">
-              管理栄養士の資格を活かして、
+            <h2 className="text-3xl lg:text-4xl font-black text-[oklch(0.22_0.01_60)] mb-5 leading-tight" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+              「食事で、もっと
               <br />
-              <span className="text-[oklch(0.42_0.10_145)]">在宅の食を支えたい。</span>
+              <span className="text-[oklch(0.65_0.20_20)]">笑顔になれる</span>
+              <span className="text-[oklch(0.22_0.01_60)]">」</span>
             </h2>
 
-            <div className="space-y-4 font-sans-jp text-base text-[oklch(0.40_0.01_60)] leading-relaxed font-light">
-              <p>
-                訪問看護が地域に根付いているように、訪問栄養指導もいつか当たり前になる時代が来ると感じています。在宅で療養されている方やご家族にとって、食事の悩みは毎日のことです。
+            <div className="space-y-4 mb-8">
+              <p className="text-base text-[oklch(0.40_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                こんにちは！管理栄養士の山田富子です。訪問看護の現場を見て、「在宅で療養している方の食事をもっとサポートしたい」という想いから、このサービスを立ち上げました。
               </p>
-              <p>
-                介護保険・医療保険の適用で、月2回まで管理栄養士が自宅に伺い、その方の生活に寄り添った栄養指導を行います。糖尿病・腎臓病・低栄養・嚥下障害など、さまざまな状態に対応します。
+              <p className="text-base text-[oklch(0.40_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                介護保険・医療保険を使って、管理栄養士がご自宅に訪問します。糖尿病・腎臓病・嚥下障害など、食事療法が必要な方に寄り添い、実際の生活に合った食事プランをご提案します。
               </p>
-              <p>
-                また、資格を持ちながら現場を離れている管理栄養士の方々と連携し、地域に密着したサービスネットワークを広げていきたいと考えています。
+              <p className="text-base text-[oklch(0.40_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                資格を持ちながらも活躍の場が少ない管理栄養士さんとも連携し、地域の栄養サポートを広げていきたいと思っています。
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-10 pt-8 border-t border-[oklch(0.88_0.02_80)]">
-              {[
-                { num: "10+", label: "年の経験" },
-                { num: "200+", label: "指導実績" },
-                { num: "2回", label: "月の訪問" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="font-playfair text-3xl font-bold text-[oklch(0.42_0.10_145)]">{stat.num}</p>
-                  <p className="font-sans-jp text-xs text-[oklch(0.52_0.01_60)] mt-1">{stat.label}</p>
+            {/* Highlights */}
+            <div className="grid grid-cols-3 gap-3">
+              {highlights.map(({ icon: Icon, color, text, sub }) => (
+                <div
+                  key={text}
+                  className="flex flex-col items-center text-center p-4 rounded-2xl bg-[oklch(0.98_0.01_90)] border border-[oklch(0.92_0.02_90)] hover:shadow-md transition-shadow"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-2"
+                    style={{ backgroundColor: `${color}25` }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color }} />
+                  </div>
+                  <p className="text-sm font-bold text-[oklch(0.25_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>{text}</p>
+                  <p className="text-xs text-[oklch(0.55_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>{sub}</p>
                 </div>
               ))}
             </div>

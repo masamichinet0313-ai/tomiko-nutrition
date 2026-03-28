@@ -8,6 +8,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <base href="/tomiko-nutrition/" />
+    <script>
+      // GitHub Pages subpath fix: trick wouter into thinking we're at /
+      const realPushState = history.pushState;
+      const realReplaceState = history.replaceState;
+      const base = '/tomiko-nutrition';
+      const originalPathname = Object.getOwnPropertyDescriptor(window.location.__proto__, 'pathname');
+      if (window.location.pathname.startsWith(base)) {
+        Object.defineProperty(window.location, 'pathname', {
+          get() { return originalPathname.get.call(this).replace(base, '') || '/'; }
+        });
+      }
+    </script>
     <script type="module" crossorigin src="./assets/index-DlojIbgP.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Bq8TwqJF.css">
   </head>

@@ -1,25 +1,40 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
 /**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+ * Home Page — 富子の訪問栄養指導
+ * Design: 和モダン・ウォームミニマリズム
+ * 
+ * Sections:
+ * 1. Hero — 大きなビジュアルと訴求コピー
+ * 2. About — 富子さんの想いとプロフィール
+ * 3. Service — サービス内容
+ * 4. Flow — ご利用の流れ
+ * 5. Insurance — 保険適用について
+ * 6. FAQ — よくある質問
+ * 7. Contact — お問い合わせ
+ * 8. Footer
  */
-export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
 
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutSection from "@/components/sections/AboutSection";
+import ServiceSection from "@/components/sections/ServiceSection";
+import FlowSection from "@/components/sections/FlowSection";
+import InsuranceSection from "@/components/sections/InsuranceSection";
+import FAQSection from "@/components/sections/FAQSection";
+import ContactSection from "@/components/sections/ContactSection";
+import FooterSection from "@/components/sections/FooterSection";
+
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen bg-[oklch(0.97_0.015_80)]">
+      <Navigation />
+      <HeroSection />
+      <AboutSection />
+      <ServiceSection />
+      <FlowSection />
+      <InsuranceSection />
+      <FAQSection />
+      <ContactSection />
+      <FooterSection />
     </div>
   );
 }

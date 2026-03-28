@@ -62,7 +62,7 @@ export default function Navigation() {
                   textShadow: scrolled ? "none" : "0 1px 4px rgba(0,0,0,0.25)",
                 }}
               >
-                富子の訪問栄養指導
+                米田富子の訪問栄養指導
               </span>
               <span
                 className="text-[10px] font-bold tracking-wide"

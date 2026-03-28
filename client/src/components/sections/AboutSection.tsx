@@ -1,5 +1,5 @@
 /**
- * AboutSection — 富子さん紹介
+ * AboutSection — 米田富子さん紹介
  * Design: ポップ＆フレッシュ。カラフルなアクセント、丸みのあるカード
  */
 
@@ -38,7 +38,7 @@ export default function AboutSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[oklch(0.65_0.20_20)]/15">
               <img
                 src={PROFILE_IMAGE}
-                alt="山田富子 管理栄養士"
+                alt="米田富子 管理栄養士"
                 className="w-full h-auto object-cover"
               />
               {/* Name card overlay */}
@@ -49,7 +49,7 @@ export default function AboutSection() {
                       Registered Dietitian
                     </p>
                     <h3 className="text-2xl font-black text-[oklch(0.22_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-                      山田 富子
+                      米田 富子
                     </h3>
                     <p className="text-sm font-medium text-[oklch(0.50_0.01_60)]" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
                       管理栄養士 / 訪問栄養指導サービス代表
@@ -99,7 +99,7 @@ export default function AboutSection() {
 
             <div className="space-y-4 mb-8">
               <p className="text-base text-[oklch(0.40_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-                こんにちは！管理栄養士の山田富子です。訪問看護の現場を見て、「在宅で療養している方の食事をもっとサポートしたい」という想いから、このサービスを立ち上げました。
+                こんにちは！管理栄養士の米田富子です。訪問看護の現場を見て、「在宅で療養している方の食事をもっとサポートしたい」という想いから、このサービスを立ち上げました。
               </p>
               <p className="text-base text-[oklch(0.40_0.01_60)] leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
                 介護保険・医療保険を使って、管理栄養士がご自宅に訪問します。糖尿病・腎臓病・嚥下障害など、食事療法が必要な方に寄り添い、実際の生活に合った食事プランをご提案します。

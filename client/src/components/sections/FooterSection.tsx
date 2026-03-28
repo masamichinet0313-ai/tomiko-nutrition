@@ -62,7 +62,7 @@ export default function FooterSection() {
                 </div>
                 <div>
                   <span className="font-bold text-white text-base block" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-                    富子の訪問栄養指導
+                    米田富子の訪問栄養指導
                   </span>
                   <span className="text-[10px] text-[oklch(0.65_0.20_20)] font-bold" style={{ fontFamily: "'Nunito', sans-serif" }}>
                     Home Visit Nutrition ✨
@@ -91,10 +91,10 @@ export default function FooterSection() {
 
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-xs text-white/40" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-              © 2024 富子の訪問栄養指導. All rights reserved.
+              © 2024 米田富子の訪問栄養指導. All rights reserved.
             </p>
             <p className="text-xs text-white/40 flex items-center gap-1" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-              Made with <Heart className="w-3 h-3 text-[oklch(0.65_0.20_20)]" /> by Tomiko
+              Made with <Heart className="w-3 h-3 text-[oklch(0.65_0.20_20)]" /> by 米田富子
             </p>
           </div>
         </div>
